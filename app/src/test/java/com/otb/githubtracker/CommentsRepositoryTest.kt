@@ -1,8 +1,8 @@
 package com.otb.githubtracker
 
 import com.otb.githubtracker.feature.IssueCommonModels
-import com.otb.githubtracker.feature.issues.OpenIssuesModels
-import com.otb.githubtracker.feature.issues.OpenIssuesRepository
+import com.otb.githubtracker.feature.comments.CommentsModels
+import com.otb.githubtracker.feature.comments.CommentsRepository
 import com.otb.githubtracker.network.ApiResult
 import com.otb.githubtracker.network.service.GitHubApiService
 import com.otb.githubtracker.util.mockRetrofitErrorResponse
@@ -18,7 +18,7 @@ import org.junit.Test
 import retrofit2.Response
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class OpenIssuesRepositoryTest {
+class CommentsRepositoryTest {
 
     @MockK
     private lateinit var gitHubApiService: GitHubApiService
@@ -29,48 +29,37 @@ class OpenIssuesRepositoryTest {
     }
 
     @Test
-    fun `success result should be returned on issues api success`() = runTest {
+    fun `success result should be returned on comments api success`() = runTest {
         val date = Date()
         val user = IssueCommonModels.UserResponse(id = 1, "userName", "avatar url", "admin")
-        val issuesResponse = listOf(
-            OpenIssuesModels.IssueResponse(
+        val response = listOf(
+            CommentsModels.CommentResponse(
                 id = 1,
-                "title",
-                "body",
-                "url",
+                "comment_body",
                 "comment_url",
-                date,
                 date,
                 date,
                 user
             )
         )
         coEvery {
-            gitHubApiService.fetchIssues(any(), any(), any(), any())
-        } returns Response.success(issuesResponse)
+            gitHubApiService.fetchIssueComments("comment_url")
+        } returns Response.success(response)
 
-        val repository = OpenIssuesRepository(gitHubApiService)
-        val result = repository.fetchIssues(
-            organizationName = "mohitrajput987",
-            repositoryName = "github-issues-v2",
-            page = 1
-        )
+        val repository = CommentsRepository(gitHubApiService)
+        val result = repository.fetchComments("comment_url")
         assert(result is ApiResult.Success)
-        assertEquals(issuesResponse, (result as ApiResult.Success).data)
+        assertEquals(response, (result as ApiResult.Success).data)
     }
 
     @Test
-    fun `error result should be returned on issues api failure`() = runTest {
+    fun `error result should be returned on comments api failure`() = runTest {
         coEvery {
-            gitHubApiService.fetchIssues(any(), any(), any(), any())
+            gitHubApiService.fetchIssueComments("comment_url")
         } returns mockRetrofitErrorResponse()
 
-        val repository = OpenIssuesRepository(gitHubApiService)
-        val result = repository.fetchIssues(
-            organizationName = "",
-            repositoryName = "github-issues-v2",
-            page = 0
-        )
+        val repository = CommentsRepository(gitHubApiService)
+        val result = repository.fetchComments("comment_url")
         assert(result is ApiResult.Error)
     }
 }
