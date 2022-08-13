@@ -1,10 +1,12 @@
 package com.otb.githubtracker.network.service
 
+import com.otb.githubtracker.feature.comments.CommentsModels
 import com.otb.githubtracker.feature.issues.OpenIssuesModels
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.Url
 
 /**
  * Created by Mohit Rajput on 13/08/22.
@@ -17,4 +19,7 @@ interface GitHubApiService {
         @Query("page") page: Int,
         @Query("per_page") perPage: Int = 30
     ): Response<List<OpenIssuesModels.IssueResponse>>
+
+    @GET
+    suspend fun fetchIssueComments(@Url commentUrl: String): Response<List<CommentsModels.CommentResponse>>
 }

@@ -1,6 +1,7 @@
 package com.otb.githubtracker.feature.issues
 
 import com.otb.githubtracker.common.base.Mapper
+import com.otb.githubtracker.feature.IssueCommonModels
 import com.otb.githubtracker.util.DateUtils
 
 /**
@@ -10,11 +11,12 @@ class OpenIssuesMapper :
     Mapper<List<OpenIssuesModels.IssueResponse>, List<OpenIssuesModels.IssueEntity>> {
     override fun mapFrom(from: List<OpenIssuesModels.IssueResponse>): List<OpenIssuesModels.IssueEntity> {
         return from.map {
-            val user = OpenIssuesModels.UserEntity(it.user.id, it.user.userName, it.user.avatarUrl)
+            val user = IssueCommonModels.UserEntity(it.user.id, it.user.userName, it.user.avatarUrl)
             OpenIssuesModels.IssueEntity(
                 id = it.id,
                 title = it.title,
                 description = getTrimmedBody(it.body),
+                commentsUrl = it.commentsUrl,
                 updatedAt = DateUtils.getFormattedTime(it.createdAt),
                 user = user
             )

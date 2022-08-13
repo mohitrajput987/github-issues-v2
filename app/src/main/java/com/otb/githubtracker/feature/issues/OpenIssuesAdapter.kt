@@ -10,7 +10,7 @@ import com.otb.githubtracker.databinding.ItemIssueBinding
 /**
  * Created by Mohit Rajput on 13/08/22.
  */
-class OpenIssuesAdapter :
+class OpenIssuesAdapter(private val onItemClick: (OpenIssuesModels.IssueEntity) -> Unit) :
     ListAdapter<OpenIssuesModels.IssueEntity, OpenIssuesAdapter.ViewHolder>(DIFF_UTIL) {
     companion object {
         private val DIFF_UTIL =
@@ -42,6 +42,14 @@ class OpenIssuesAdapter :
 
     inner class ViewHolder(private val binding: ItemIssueBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                binding.issueEntity?.let {
+                    onItemClick(it)
+                }
+            }
+        }
 
         fun bind(issueEntity: OpenIssuesModels.IssueEntity) {
             binding.issueEntity = issueEntity

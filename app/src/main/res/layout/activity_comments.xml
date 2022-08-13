@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="issueEntity"
+            type="com.otb.githubtracker.feature.issues.OpenIssuesModels.IssueEntity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/very_light_blue">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="2"
+            android:paddingHorizontal="@dimen/list_horizontal_padding"
+            android:layout_marginTop="@dimen/list_vertical_padding"
+            android:text="@{issueEntity.title}"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="This is the title of my very first PR of this repository. " />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-light"
+            android:maxLines="2"
+            android:layout_marginTop="@dimen/list_vertical_padding"
+            android:paddingHorizontal="@dimen/list_horizontal_padding"
+            android:text="@{issueEntity.description}"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            tools:text="This is the title of my very first PR of this repository. This is the title of my very first PR of this repository. This is the title of my very first PR of this repository. This is the title of my very first PR of this repository. This is the title of my very first PR of this repository." />
+
+        <TextView
+            android:id="@+id/tv_opened_by"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/list_horizontal_padding"
+            android:fontFamily="sans-serif"
+            android:text="@string/opened_by"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_user_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_user_avatar" />
+
+        <ImageView
+            android:id="@+id/iv_user_avatar"
+            android:layout_width="@dimen/list_user_image_side"
+            android:layout_height="@dimen/list_user_image_side"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/app_name"
+            app:imageUrl="@{issueEntity.user.imageUrl}"
+            app:isCircular="@{true}"
+            app:layout_constraintStart_toEndOf="@+id/tv_opened_by"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description"
+            app:placeholder="@{@drawable/ic_user_default}"
+            tools:src="@drawable/ic_user_default" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="sans-serif"
+            android:text="@{issueEntity.user.userName}"
+            android:textColor="@color/teal_700"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_user_avatar"
+            app:layout_constraintStart_toEndOf="@+id/iv_user_avatar"
+            app:layout_constraintTop_toTopOf="@+id/iv_user_avatar"
+            tools:text="mohitrajput987" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_comments"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/list_vertical_padding"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_user_avatar" />
+
+        <TextView
+            android:id="@+id/tv_error"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/list_vertical_padding"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/list_horizontal_padding"
+            android:paddingVertical="@dimen/list_vertical_padding"
+            android:text="@string/no_comments"
+            android:textColor="@color/gray"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="@color/white"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_user_avatar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

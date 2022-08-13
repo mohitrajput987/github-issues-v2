@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="commentEntity"
+            type="com.otb.githubtracker.feature.comments.CommentsModels.CommentEntity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:paddingHorizontal="@dimen/list_horizontal_padding"
+        android:paddingVertical="@dimen/list_vertical_padding">
+
+        <ImageView
+            android:id="@+id/iv_user_avatar"
+            android:layout_width="@dimen/comment_user_image_side"
+            android:layout_height="@dimen/comment_user_image_side"
+            android:contentDescription="@string/app_name"
+            app:imageUrl="@{commentEntity.user.imageUrl}"
+            app:isCircular="@{true}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholder="@{@drawable/ic_user_default}"
+            tools:src="@drawable/ic_user_default" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/list_vertical_padding"
+            android:fontFamily="sans-serif"
+            android:text="@{commentEntity.user.userName}"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/iv_user_avatar"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="mohitrajput987" />
+
+        <TextView
+            android:id="@+id/tv_closed_at"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/list_vertical_padding"
+            android:layout_marginTop="1dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@{commentEntity.description}"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_user_avatar"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_name"
+            tools:text="This is a really nice issue. I loved that. Hope I see such kind of issues again and again in my life." />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
