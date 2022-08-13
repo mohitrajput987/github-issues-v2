@@ -10,6 +10,9 @@ companion object {
 ```
 
 ## Screenshots
+| <img src="https://github.com/mohitrajput987/media-repository/blob/master/kotlin/github-issues-list.png" width="22%" alt="issues list"> |
+<img src="https://github.com/mohitrajput987/media-repository/blob/master/kotlin/github-issue-comments.png" width="22%" alt="comments"> |
+<img src="https://github.com/mohitrajput987/media-repository/blob/master/kotlin/github-issue-no-comment.png" width="22%" alt="no comments"> |
 
 ## Components Used
 - MVVM architecture
