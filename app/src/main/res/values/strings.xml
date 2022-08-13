@@ -1,0 +1,5 @@
+<resources>
+    <string name="opened_by">Opened by</string>
+    <string name="updated_at_x">Updated at %s</string>
+    <string name="open_issues">Open Issues</string>
+</resources>
