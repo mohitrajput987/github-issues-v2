@@ -1,4 +1,4 @@
-package com.otb.githubtracker.network.service
+package com.otb.githubtracker.network
 
 import com.otb.githubtracker.network.interceptor.NetworkStateChecker
 import com.otb.githubtracker.network.interceptor.NetworkStateCheckerImpl

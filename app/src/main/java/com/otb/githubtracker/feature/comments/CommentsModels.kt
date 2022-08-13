@@ -1,4 +1,4 @@
-package com.otb.githubtracker.feature.issues
+package com.otb.githubtracker.feature.comments
 
 import android.os.Parcelable
 import androidx.annotation.Keep
@@ -10,11 +10,10 @@ import kotlinx.parcelize.Parcelize
 /**
  * Created by Mohit Rajput on 13/08/22.
  */
-class OpenIssuesModels {
+class CommentsModels {
     @Parcelize
-    data class IssueEntity(
+    data class CommentEntity(
         val id: Long,
-        val title: String,
         val description: String,
         val commentsUrl: String,
         val updatedAt: String,
@@ -22,12 +21,9 @@ class OpenIssuesModels {
     ) : Parcelable
 
     @Keep
-    data class IssueResponse(
+    data class CommentResponse(
         @SerializedName("id")
         val id: Long,
-
-        @SerializedName("title")
-        val title: String,
 
         @SerializedName("body")
         val body: String,
@@ -35,14 +31,8 @@ class OpenIssuesModels {
         @SerializedName("url")
         val url: String,
 
-        @SerializedName("comments_url")
-        val commentsUrl: String,
-
         @SerializedName("created_at")
         val createdAt: Date,
-
-        @SerializedName("closed_at")
-        val closedAt: Date?,
 
         @SerializedName("updated_at")
         val updatedAt: Date,

@@ -9,6 +9,7 @@ import com.otb.githubtracker.common.LoadingSpinner
 import com.otb.githubtracker.common.base.BaseActivity
 import com.otb.githubtracker.common.base.DisplaysLoadingSpinner
 import com.otb.githubtracker.databinding.ActivityOpenIssuesBinding
+import com.otb.githubtracker.feature.comments.CommentsActivity
 import com.otb.githubtracker.network.ViewState
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +24,11 @@ class OpenIssuesActivity : BaseActivity<ActivityOpenIssuesBinding>(), DisplaysLo
         ActivityOpenIssuesBinding.inflate(layoutInflater)
 
     private val viewModel by viewModels<OpenIssuesViewModel>()
-    private val openIssuesAdapter by lazy { OpenIssuesAdapter() }
+    private val openIssuesAdapter by lazy {
+        OpenIssuesAdapter(onItemClick = { issueEntity ->
+            onIssueItemClick(issueEntity)
+        })
+    }
     override val loadingSpinner by lazy { LoadingSpinner(this) }
 
     override fun setupView() {
@@ -59,5 +64,9 @@ class OpenIssuesActivity : BaseActivity<ActivityOpenIssuesBinding>(), DisplaysLo
     private fun showIssues(issueEntities: List<OpenIssuesModels.IssueEntity>) {
         dismissLoadingSpinner()
         openIssuesAdapter.submitList(issueEntities)
+    }
+
+    private fun onIssueItemClick(issueEntity: OpenIssuesModels.IssueEntity) {
+        startActivity(CommentsActivity.getIntent(this, issueEntity))
     }
 }
