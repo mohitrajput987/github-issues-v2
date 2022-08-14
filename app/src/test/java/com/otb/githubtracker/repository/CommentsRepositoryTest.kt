@@ -1,4 +1,4 @@
-package com.otb.githubtracker
+package com.otb.githubtracker.repository
 
 import com.otb.githubtracker.db.CommentsDao
 import com.otb.githubtracker.feature.IssueCommonModels

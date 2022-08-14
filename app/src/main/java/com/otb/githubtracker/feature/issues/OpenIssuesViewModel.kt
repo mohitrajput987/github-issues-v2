@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.otb.githubtracker.common.CoroutinesDispatcherProvider
 import com.otb.githubtracker.network.ApiResult
 import com.otb.githubtracker.network.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,7 @@ import kotlinx.coroutines.withContext
  */
 
 @HiltViewModel
-class OpenIssuesViewModel @Inject constructor(private val repository: OpenIssuesContact.Repository) :
+class OpenIssuesViewModel @Inject constructor(private val repository: OpenIssuesContact.Repository, private val dispatcherProvider: CoroutinesDispatcherProvider) :
     ViewModel() {
     private val _openIssuesLiveData =
         MutableLiveData<ViewState<List<OpenIssuesModels.IssueEntity>>>()
@@ -31,7 +32,7 @@ class OpenIssuesViewModel @Inject constructor(private val repository: OpenIssues
         repositoryName: String
     ) {
         _openIssuesLiveData.value = ViewState.Loading
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcherProvider.io) {
             when (val result =
                 repository.fetchIssues(
                     organizationName,
@@ -39,13 +40,13 @@ class OpenIssuesViewModel @Inject constructor(private val repository: OpenIssues
                     pageNum
                 )) {
                 is ApiResult.Success -> {
-                    withContext(Dispatchers.Main) {
+                    withContext(dispatcherProvider.main) {
                         val issueEntities = openIssuesMapper.mapFrom(result.data)
                         _openIssuesLiveData.value = ViewState.Success(issueEntities)
                     }
                 }
                 is ApiResult.Error -> {
-                    withContext(Dispatchers.Main) {
+                    withContext(dispatcherProvider.main) {
                         _openIssuesLiveData.value = ViewState.Error(result.message)
                     }
                 }
