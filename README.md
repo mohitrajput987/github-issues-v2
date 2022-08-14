@@ -15,8 +15,9 @@ companion object {
 <img src="https://github.com/mohitrajput987/media-repository/blob/master/kotlin/github-issue-no-comment.png" width="22%" alt="no comments"> |
 
 
-## Test Cases
-<img width="511" alt="image" src="https://user-images.githubusercontent.com/5130090/184497144-1d74d5aa-89ed-4544-80c1-c04a5ffa989c.png">
+## Unit Tests
+<img width="511" alt="image" src="https://user-images.githubusercontent.com/5130090/184533015-fe5d0fc0-2e61-465e-867e-58eb89f314b3.png">
+
 
 ## Components Used
 - MVVM architecture
