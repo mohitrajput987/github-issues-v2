@@ -1,9 +1,11 @@
 package com.otb.githubtracker
 
+import com.otb.githubtracker.db.IssuesDao
 import com.otb.githubtracker.feature.IssueCommonModels
 import com.otb.githubtracker.feature.issues.OpenIssuesModels
 import com.otb.githubtracker.feature.issues.OpenIssuesRepository
 import com.otb.githubtracker.network.ApiResult
+import com.otb.githubtracker.network.interceptor.NetworkNotAvailableException
 import com.otb.githubtracker.network.service.GitHubApiService
 import com.otb.githubtracker.util.mockRetrofitErrorResponse
 import io.mockk.MockKAnnotations
@@ -22,6 +24,9 @@ class OpenIssuesRepositoryTest {
 
     @MockK
     private lateinit var gitHubApiService: GitHubApiService
+
+    @MockK
+    private lateinit var issuesDao: IssuesDao
 
     @Before
     fun setup() {
@@ -49,7 +54,7 @@ class OpenIssuesRepositoryTest {
             gitHubApiService.fetchIssues(any(), any(), any(), any())
         } returns Response.success(issuesResponse)
 
-        val repository = OpenIssuesRepository(gitHubApiService)
+        val repository = OpenIssuesRepository(gitHubApiService, issuesDao)
         val result = repository.fetchIssues(
             organizationName = "mohitrajput987",
             repositoryName = "github-issues-v2",
@@ -65,12 +70,48 @@ class OpenIssuesRepositoryTest {
             gitHubApiService.fetchIssues(any(), any(), any(), any())
         } returns mockRetrofitErrorResponse()
 
-        val repository = OpenIssuesRepository(gitHubApiService)
+        val repository = OpenIssuesRepository(gitHubApiService, issuesDao)
         val result = repository.fetchIssues(
             organizationName = "",
             repositoryName = "github-issues-v2",
             page = 0
         )
         assert(result is ApiResult.Error)
+    }
+
+    @Test
+    fun `get data from local db on network issue`() = runTest {
+        val date = Date()
+        val user = IssueCommonModels.UserResponse(id = 1, "userName", "avatar url", "admin")
+        val issuesResponse = listOf(
+            OpenIssuesModels.IssueResponse(
+                id = 1,
+                "title",
+                "body",
+                "url",
+                "comment_url",
+                date,
+                date,
+                date,
+                user
+            )
+        )
+        coEvery {
+            issuesDao.getAllIssues()
+        } returns issuesResponse
+
+        coEvery {
+            gitHubApiService.fetchIssues(any(), any(), any(), any())
+        } throws NetworkNotAvailableException()
+
+
+        val repository = OpenIssuesRepository(gitHubApiService, issuesDao)
+        val result = repository.fetchIssues(
+            organizationName = "mohitrajput987",
+            repositoryName = "github-issues-v2",
+            page = 1
+        )
+        assert(result is ApiResult.Success)
+        assertEquals(issuesResponse, (result as ApiResult.Success).data)
     }
 }
