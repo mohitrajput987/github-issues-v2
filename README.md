@@ -23,8 +23,9 @@ companion object {
 ## Components Used
 - MVVM architecture
 - Data & View binding
-- Paging library
+- Room database
 - Live Data
 - Kotlin coroutines
 - Hilt
 - Repository unit tests
+- ViewModel unit tests
