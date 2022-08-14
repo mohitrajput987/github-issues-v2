@@ -11,6 +11,7 @@ buildscript {
         hiltLibVersion = "2.42"
         coroutinesVersion = "1.6.3"
         glideVersion = '4.13.2'
+        roomVersion = "2.4.3"
     }
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltLibVersion"

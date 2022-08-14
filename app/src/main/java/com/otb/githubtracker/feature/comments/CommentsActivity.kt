@@ -67,8 +67,8 @@ class CommentsActivity : BaseActivity<ActivityCommentsBinding>(), DisplaysLoadin
 
     private fun showErrorMessage(errorMessage: String) {
         dismissLoadingSpinner()
-        binding.rvComments.isVisible = true
-        binding.tvError.isVisible = false
+        binding.rvComments.isVisible = false
+        binding.tvError.isVisible = true
         binding.tvError.text = errorMessage
     }
 
