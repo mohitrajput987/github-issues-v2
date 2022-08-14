@@ -7,6 +7,6 @@ import com.otb.githubtracker.network.ApiResult
  */
 class CommentsContact {
     interface Repository {
-        suspend fun fetchComments(commentsUrl: String): ApiResult<List<CommentsModels.CommentResponse>>
+        suspend fun fetchComments(commentsUrl: String, issueUrl : String): ApiResult<List<CommentsModels.CommentResponse>>
     }
 }

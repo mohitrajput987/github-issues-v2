@@ -17,6 +17,7 @@ class OpenIssuesMapper :
                 title = it.title,
                 description = getTrimmedBody(it.body),
                 commentsUrl = it.commentsUrl,
+                issueUrl = it.url,
                 updatedAt = DateUtils.getFormattedTime(it.createdAt),
                 user = user
             )

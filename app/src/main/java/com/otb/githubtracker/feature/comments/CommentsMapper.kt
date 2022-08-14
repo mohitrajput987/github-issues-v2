@@ -15,7 +15,7 @@ class CommentsMapper :
             CommentsModels.CommentEntity(
                 id = it.id,
                 description = it.body,
-                commentsUrl = it.url,
+                issueUrl = it.issueUrl,
                 updatedAt = DateUtils.getFormattedTime(it.createdAt),
                 user = user
             )

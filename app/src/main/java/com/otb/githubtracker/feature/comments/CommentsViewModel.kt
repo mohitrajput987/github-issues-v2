@@ -38,7 +38,7 @@ class CommentsViewModel @Inject constructor(
         _commentsLiveData.value = ViewState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             when (val result =
-                repository.fetchComments(issue.commentsUrl)) {
+                repository.fetchComments(issue.commentsUrl, issue.issueUrl)) {
                 is ApiResult.Success -> {
                     withContext(Dispatchers.Main) {
                         val issueEntities = commentsMapper.mapFrom(result.data)

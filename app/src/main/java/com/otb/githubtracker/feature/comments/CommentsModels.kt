@@ -2,6 +2,9 @@ package com.otb.githubtracker.feature.comments
 
 import android.os.Parcelable
 import androidx.annotation.Keep
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.otb.githubtracker.feature.IssueCommonModels
 import java.util.*
@@ -15,21 +18,23 @@ class CommentsModels {
     data class CommentEntity(
         val id: Long,
         val description: String,
-        val commentsUrl: String,
+        val issueUrl: String,
         val updatedAt: String,
         val user: IssueCommonModels.UserEntity
     ) : Parcelable
 
     @Keep
+    @Entity(tableName = "comment")
     data class CommentResponse(
         @SerializedName("id")
+        @PrimaryKey
         val id: Long,
 
         @SerializedName("body")
         val body: String,
 
-        @SerializedName("url")
-        val url: String,
+        @SerializedName("issue_url")
+        val issueUrl: String,
 
         @SerializedName("created_at")
         val createdAt: Date,
@@ -38,6 +43,7 @@ class CommentsModels {
         val updatedAt: Date,
 
         @SerializedName("user")
+        @Embedded
         val user: IssueCommonModels.UserResponse
     )
 }
