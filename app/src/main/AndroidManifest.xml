@@ -18,7 +18,7 @@
         android:theme="@style/Theme.GithubRepoTracker"
         tools:targetApi="31">
         <activity
-            android:name=".feature.issues.OpenIssuesActivity"
+            android:name=".feature.issues.NewOpenIssuesActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
